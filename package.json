@@ -1,0 +1,12 @@
+{
+    "name": "application-name"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.4.0"
+    , "jqtpl": ">= 0.0.1"
+    , "mongoose": ">= 0.0.1"
+    , "oauth": ">= 0.0.1"
+    , "cluster": ">= 0.0.1"
+  }
+}
