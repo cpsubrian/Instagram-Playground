@@ -14,6 +14,7 @@ $(document).ready(function() {
 
   // Emit photo hover events.
   $('ul li img').hover(function() {
+    $(this).parent().append('<div class="details"></div>');
     var index = parseInt($(this).attr('rel'));
     if (typeof photos[index] == 'undefined') {
       socket.emit('photo hover', {index: index});
@@ -28,7 +29,7 @@ $(document).ready(function() {
   var showPhotoDetails = function(index) {
     var photo = photos[index];
     var li = $('img[rel="' + index + '"]').parent();
-    var details = $('<div class="details"></div>');
+    var details = li.find('.details');
     
     if (typeof photo.user.full_name != 'undefined' && photo.user.full_name.length > 0) {
       details.append('<p>' + 'By: ' + photo.user.full_name + '</p>');
@@ -37,7 +38,7 @@ $(document).ready(function() {
       details.append('<p>"' + photo.caption + '"</p>');
     }
 
-    li.append(details);
+    details.fadeIn('fast');
   }
 
 
