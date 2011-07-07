@@ -24,6 +24,10 @@ var refresh = exports.refresh = function() {
   photos = [];
 }
 
+var getPhoto = exports.getPhoto = function(index) {
+  return photos[index];
+}
+
 // Fetch popular photos.
 global.popularPhotos = [];
 var fetchPopular = function(finish) {
@@ -41,7 +45,7 @@ var fetchPopular = function(finish) {
       res.on('end', function() {
         var parsed = JSON.parse(data);
         for (var i in parsed.data) {
-          photos.push(new photo(parsed.data[i]));
+          photos.push(new photo(parsed.data[i], i));
         }
         finish(photos);
       });
@@ -56,7 +60,8 @@ var fetchPopular = function(finish) {
 }
 
 // Parse the properties we want from photo data.
-var photo = function(data) {
+var photo = function(data, index) {
+  this.index = index;
   if (data.caption) {
     this.caption = data.caption.text;
   }
@@ -75,10 +80,10 @@ var photo = function(data) {
 };
 photo.prototype = {
   render: function() {
-    return '<img src="' + this.image.url  + '" width="' + this.image.width  + '" height="' + this.image.height  + '">';
+    return '<img src="' + this.image.url  + '" width="' + this.image.width  + '" height="' + this.image.height  + '" rel="' + this.index + '">';
   },
   renderThumb: function() {
-    return '<img src="' + this.thumb.url  + '" width="' + this.thumb.width  + '" height="' + this.thumb.height  + '">';
+    return '<img src="' + this.thumb.url  + '" width="' + this.thumb.width  + '" height="' + this.thumb.height  + '" rel="' + this.index + '">';
   }
 };
 
